@@ -275,7 +275,6 @@ AddProject(
   GIT_TAG origin/Thesis
   LINK_TO "${MC_RTC_CONFIG_DIR}"
   CLONE_ONLY
-  DEPENDS mc_rtc
 )
 
 if(WITH_ROS_SUPPORT)
