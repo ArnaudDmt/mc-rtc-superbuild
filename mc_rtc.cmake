@@ -267,6 +267,17 @@ AddProject(
   APT_PACKAGES ${mc_rtc_APT_PACKAGES}
 )
 
+set(MC_RTC_CONFIG_DIR "$ENV{HOME}/.config/mc_rtc" CACHE PATH
+    "mc_rtc user configuration directory")
+AddProject(
+  mc_rtc_configs
+  GITHUB ArnaudDmt/mc_rtc_Configs
+  GIT_TAG origin/Thesis
+  LINK_TO "${MC_RTC_CONFIG_DIR}"
+  CLONE_ONLY
+  DEPENDS mc_rtc
+)
+
 if(WITH_ROS_SUPPORT)
   AddCatkinProject(
     mc_rtc_ros
