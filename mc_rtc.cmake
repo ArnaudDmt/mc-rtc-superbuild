@@ -349,3 +349,6 @@ AddProject(
   DEPENDS mc_rtc
   APT_PACKAGES libext_obs
 )
+
+add_custom_target(mc_rtc_custom_setup)
+add_dependencies(mc_rtc_custom_setup mc_state_observation mc_rtc_configs)
