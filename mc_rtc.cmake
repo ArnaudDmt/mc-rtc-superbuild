@@ -318,7 +318,7 @@ AddProject(
   DEPENDS gtsam
 )
 
-set(MC_STATE_OBSERVATION_DEPENDS mc_rtc kinetics_observer_fg)
+set(MC_STATE_OBSERVATION_DEPENDS mc_rtc)
 set(MC_STATE_OBSERVATION_OPTIONS "-DWITH_ROS_OBSERVERS=OFF")
 
 if(WITH_ROS_SUPPORT)
@@ -352,3 +352,6 @@ AddProject(
 
 add_custom_target(mc_rtc_custom_setup)
 add_dependencies(mc_rtc_custom_setup mc_state_observation mc_rtc_configs)
+
+add_custom_target(mc_rtc_fg_setup)
+add_dependencies(mc_rtc_fg_setup mc_rtc_custom_setup kinetics_observer_fg)
