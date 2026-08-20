@@ -26,9 +26,15 @@ RequireExtension(
 )
 
 set(EXTENSIONS_DIR ${CMAKE_CURRENT_LIST_DIR}/superbuild-extensions)
-include(${EXTENSIONS_DIR}/gui/mc_rtc-magnum.cmake)
-include(${EXTENSIONS_DIR}/interfaces/mc_mujoco.cmake)
-include(${EXTENSIONS_DIR}/controllers/BaseLineWalkingController.cmake)
+if(NOT TARGET mc_rtc-magnum)
+  include(${EXTENSIONS_DIR}/gui/mc_rtc-magnum.cmake)
+endif()
+if(NOT TARGET mc_mujoco)
+  include(${EXTENSIONS_DIR}/interfaces/mc_mujoco.cmake)
+endif()
+if(NOT TARGET BaseLineWalkingController)
+  include(${EXTENSIONS_DIR}/controllers/BaseLineWalkingController.cmake)
+endif()
 
 include(${CMAKE_CURRENT_LIST_DIR}/plugins/NoisySensors.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/plugins/HartleyIEKF.cmake)
