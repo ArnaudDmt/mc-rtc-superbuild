@@ -6,6 +6,7 @@
 option(BUILD_BENCHMARKS "Build benchmarks" OFF)
 option(INSTALL_SYSTEM_DEPENDENCIES "Install system dependencies" ON)
 option(WITH_LSSOL "Enable LSSOL support" OFF)
+option(WITH_KINETICS_OBSERVER_FG "Build the kinetics observer factor graph" OFF)
 if(UNIX AND NOT APPLE)
   set(WITH_ROS_SUPPORT_DEFAULT ON)
 else()

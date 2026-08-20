@@ -288,35 +288,37 @@ if(WITH_ROS_SUPPORT)
   )
 endif()
 
-AddProject(
-  gtsam
-  GITHUB borglab/gtsam
-  GIT_TAG origin/release/4.2
-  SOURCE_DIR "${SOURCE_DESTINATION}/gtsam-superbuild"
-  CMAKE_ARGS
-    -DCMAKE_POLICY_VERSION_MINIMUM:STRING=3.5
-    -DBUILD_SHARED_LIBS:BOOL=ON
-    -DGTSAM_BUILD_UNSTABLE:BOOL=ON
-    -DGTSAM_BUILD_TESTS:BOOL=OFF
-    -DGTSAM_BUILD_DOCS:BOOL=OFF
-    -DGTSAM_BUILD_EXAMPLES_ALWAYS:BOOL=OFF
-    -DGTSAM_BUILD_TIMING_ALWAYS:BOOL=OFF
-    -DGTSAM_BUILD_PYTHON:BOOL=OFF
-    -DGTSAM_INSTALL_MATLAB_TOOLBOX:BOOL=OFF
-    -DGTSAM_USE_SYSTEM_EIGEN:BOOL=ON
-    -DGTSAM_USE_SYSTEM_METIS:BOOL=OFF
-    -DGTSAM_WITH_TBB:BOOL=ON
-  APT_DEPENDENCIES libtbb-dev
-  SKIP_TEST
-)
+if(WITH_KINETICS_OBSERVER_FG)
+  AddProject(
+    gtsam
+    GITHUB borglab/gtsam
+    GIT_TAG origin/release/4.2
+    SOURCE_DIR "${SOURCE_DESTINATION}/gtsam-superbuild"
+    CMAKE_ARGS
+      -DCMAKE_POLICY_VERSION_MINIMUM:STRING=3.5
+      -DBUILD_SHARED_LIBS:BOOL=ON
+      -DGTSAM_BUILD_UNSTABLE:BOOL=ON
+      -DGTSAM_BUILD_TESTS:BOOL=OFF
+      -DGTSAM_BUILD_DOCS:BOOL=OFF
+      -DGTSAM_BUILD_EXAMPLES_ALWAYS:BOOL=OFF
+      -DGTSAM_BUILD_TIMING_ALWAYS:BOOL=OFF
+      -DGTSAM_BUILD_PYTHON:BOOL=OFF
+      -DGTSAM_INSTALL_MATLAB_TOOLBOX:BOOL=OFF
+      -DGTSAM_USE_SYSTEM_EIGEN:BOOL=ON
+      -DGTSAM_USE_SYSTEM_METIS:BOOL=OFF
+      -DGTSAM_WITH_TBB:BOOL=ON
+    APT_DEPENDENCIES libtbb-dev
+    SKIP_TEST
+  )
 
-AddProject(
-  kinetics_observer_fg
-  GITHUB ArnaudDmt/KO_FactorGraph
-  GIT_TAG origin/feature/latent-joint-acceleration
-  SOURCE_DIR "${SOURCE_DESTINATION}/KineticsObserver_factorGraphs"
-  DEPENDS gtsam
-)
+  AddProject(
+    kinetics_observer_fg
+    GITHUB ArnaudDmt/KO_FactorGraph
+    GIT_TAG origin/feature/latent-joint-acceleration
+    SOURCE_DIR "${SOURCE_DESTINATION}/KineticsObserver_factorGraphs"
+    DEPENDS gtsam
+  )
+endif()
 
 set(MC_STATE_OBSERVATION_DEPENDS mc_rtc)
 set(MC_STATE_OBSERVATION_OPTIONS "-DWITH_ROS_OBSERVERS=OFF")
@@ -349,9 +351,3 @@ AddProject(
   DEPENDS mc_rtc
   APT_PACKAGES libext_obs
 )
-
-add_custom_target(mc_rtc_custom_setup)
-add_dependencies(mc_rtc_custom_setup mc_state_observation mc_rtc_configs)
-
-add_custom_target(mc_rtc_fg_setup)
-add_dependencies(mc_rtc_fg_setup mc_rtc_custom_setup kinetics_observer_fg)
