@@ -31,8 +31,8 @@ AddProject(
 
 AddProject(
   state-observation
-  GITHUB jrl-umi3218/state-observation
-  GIT_TAG origin/master
+  GITHUB ArnaudDmt/state-observation
+  GIT_TAG origin/addWaiko
   CMAKE_ARGS -DBUILD_STATE_OBSERVATION_TOOLS:BOOL=OFF
   APT_PACKAGES libstate-observation-dev
 )
@@ -278,7 +278,37 @@ if(WITH_ROS_SUPPORT)
   )
 endif()
 
-set(MC_STATE_OBSERVATION_DEPENDS mc_rtc)
+AddProject(
+  gtsam
+  GITHUB borglab/gtsam
+  GIT_TAG origin/release/4.2
+  SOURCE_DIR "${SOURCE_DESTINATION}/gtsam-superbuild"
+  CMAKE_ARGS
+    -DCMAKE_POLICY_VERSION_MINIMUM:STRING=3.5
+    -DBUILD_SHARED_LIBS:BOOL=ON
+    -DGTSAM_BUILD_UNSTABLE:BOOL=ON
+    -DGTSAM_BUILD_TESTS:BOOL=OFF
+    -DGTSAM_BUILD_DOCS:BOOL=OFF
+    -DGTSAM_BUILD_EXAMPLES_ALWAYS:BOOL=OFF
+    -DGTSAM_BUILD_TIMING_ALWAYS:BOOL=OFF
+    -DGTSAM_BUILD_PYTHON:BOOL=OFF
+    -DGTSAM_INSTALL_MATLAB_TOOLBOX:BOOL=OFF
+    -DGTSAM_USE_SYSTEM_EIGEN:BOOL=ON
+    -DGTSAM_USE_SYSTEM_METIS:BOOL=OFF
+    -DGTSAM_WITH_TBB:BOOL=ON
+  APT_DEPENDENCIES libtbb-dev
+  SKIP_TEST
+)
+
+AddProject(
+  kinetics_observer_fg
+  GITHUB ArnaudDmt/KO_FactorGraph
+  GIT_TAG origin/feature/latent-joint-acceleration
+  SOURCE_DIR "${SOURCE_DESTINATION}/KineticsObserver_factorGraphs"
+  DEPENDS gtsam
+)
+
+set(MC_STATE_OBSERVATION_DEPENDS mc_rtc kinetics_observer_fg)
 set(MC_STATE_OBSERVATION_OPTIONS "-DWITH_ROS_OBSERVERS=OFF")
 
 if(WITH_ROS_SUPPORT)
@@ -295,8 +325,17 @@ endif()
 
 AddProject(
   mc_state_observation
-  GITHUB jrl-umi3218/mc_state_observation
+  GITHUB ArnaudDmt/mc_state_observation
+  GIT_TAG origin/KO_FG
   CMAKE_ARGS ${MC_STATE_OBSERVATION_OPTIONS}
   DEPENDS ${MC_STATE_OBSERVATION_DEPENDS}
   APT_PACKAGES mc-state-observation ros-${ROS_DISTRO}-mc-state-observation
+)
+
+AddProject(
+  mc_external_forces_observer
+  GITHUB isri-aist/mc_external_forces_observer
+  GIT_TAG origin/main
+  DEPENDS mc_rtc
+  APT_PACKAGES libext_obs
 )

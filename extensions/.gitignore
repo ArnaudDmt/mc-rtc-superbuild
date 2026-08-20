@@ -1,2 +1,5 @@
 *
 !.gitignore
+!arnaud-setup.cmake
+!plugins/
+!plugins/*.cmake
