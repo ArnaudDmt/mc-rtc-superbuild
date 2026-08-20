@@ -3,25 +3,25 @@
 
 RequireExtension(
   superbuild-extensions
-  GIT_REPOSITORY https://github.com/mc-rtc/superbuild-extensions.git
+  GIT_REPOSITORY git@github.com:mc-rtc/superbuild-extensions.git
   GIT_TAG main
 )
 
 RequireExtension(
   drcutil-superbuild
-  GIT_REPOSITORY https://github.com/ThomasDuvinage/drcutil-superbuild.git
+  GIT_REPOSITORY git@github.com:ThomasDuvinage/drcutil-superbuild.git
   GIT_TAG ubuntu2204
 )
 
 RequireExtension(
   lipm-walking-controller-superbuild
-  GIT_REPOSITORY https://github.com/mc-rtc/lipm-walking-controller-superbuild.git
+  GIT_REPOSITORY git@github.com:mc-rtc/lipm-walking-controller-superbuild.git
   GIT_TAG main
 )
 
 RequireExtension(
   mc-logistic-demo-superbuild
-  GIT_REPOSITORY https://github.com/isri-aist/mc-logistic-demo-superbuild.git
+  GIT_REPOSITORY git@github.com:isri-aist/mc-logistic-demo-superbuild.git
   GIT_TAG main
 )
 
