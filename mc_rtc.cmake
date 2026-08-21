@@ -345,6 +345,23 @@ AddProject(
 )
 
 AddProject(
+  data_manipulation_tools
+  GITHUB ArnaudDmt/data_manipulation_tools
+  GIT_TAG origin/main
+  DEPENDS mc_state_observation
+)
+
+if(WITH_ROS_SUPPORT AND ROS_IS_ROS2)
+  AddCatkinProject(
+    state_observation_ros2
+    GITHUB ArnaudDmt/state_observation_ros2
+    GIT_TAG origin/main
+    WORKSPACE mc_rtc_ws
+    DEPENDS state-observation
+  )
+endif()
+
+AddProject(
   mc_external_forces_observer
   GITHUB isri-aist/mc_external_forces_observer
   GIT_TAG origin/main
